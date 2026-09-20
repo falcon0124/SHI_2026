@@ -92,8 +92,8 @@ function RouteDetailView({ route, pair }: { route: RouteSummary; pair: string })
         </div>
       </Card>
 
-      <div className="grid gap-7 md:grid-cols-2">
-        <Card className="!px-[26px] !py-6">
+      <div className="flex flex-wrap items-start gap-7">
+        <Card className="min-w-0 flex-[1_1_320px] !px-[26px] !py-6">
           <h3 className="m-0 mb-1 font-display text-[17px] font-semibold">Price by source</h3>
           <p className="m-0 mb-[18px] text-[12.5px] text-muted">Median quoted fare today, same cabin and date.</p>
           <Async state={d} skeleton={<SkeletonBlock height={180} label="Loading sources" />} isEmpty={(r) => r.by_source.length === 0} empty={{ title: "No source quotes today" }}>
@@ -109,7 +109,7 @@ function RouteDetailView({ route, pair }: { route: RouteSummary; pair: string })
             }}
           </Async>
         </Card>
-        <Card className="!px-[26px] !py-6">
+        <Card className="min-w-0 flex-[1_1_320px] !px-[26px] !py-6">
           <h3 className="m-0 mb-1 font-display text-[17px] font-semibold">Booking-window curve</h3>
           <p className="m-0 mb-[18px] text-[12.5px] text-muted">Mean fare by days to departure — the index samples at D-7, D-15 and D-30.</p>
           <Async state={d} skeleton={<SkeletonBlock height={190} label="Loading booking curve" />}>
@@ -139,7 +139,7 @@ export function RoutesScreen() {
 
   return (
     <Container className="pb-14 pt-9">
-      <PageHeader eyebrow="Route explorer" title="Basket city-pairs" />
+      <PageHeader eyebrow="Route explorer" title="Basket city-pairs" dek="Drill into a single route to see the fare band behind its sub-index, how sources disagree, and how price climbs toward departure." />
       <div className="mt-7">
         <Async state={routes} skeleton={<SkeletonBlock height={320} label="Loading routes" />} isEmpty={(r) => r.routes.length === 0} empty={{ title: "No routes in the basket", hint: "The basket definition returned no city-pairs." }}>
           {({ routes: list }) => {

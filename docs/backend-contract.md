@@ -43,10 +43,10 @@ EXT: `rule_label` (human-readable rule text shown in the log).
 ## Extension endpoints
 
 ### `GET /overview`
-`as_of`, `release_label`, `headline{level,mom,yoy,base}`, `today{fares_read,scraper_uptime_30d,outlier_rate}`,
+`as_of`, `release_label`, `headline{level,mom,yoy,base,period_label,prev_period_label}` (`period_label` e.g. "September 2026"; `prev_period_label` e.g. "August"), `problem{swing_min_pct,swing_max_pct,observations_per_month}` (single-day fare swing range shown on the homepage, and reads per route per booking window), `today{fares_read,scraper_uptime_30d,outlier_rate}`,
 `chart_note`, `movers[{pair,delta_30d}]` (top 5 by size), `collection{sources_online,sources_total,basket_pairs,readings_per_route_day,next_daily_run}`,
 `calendar{daily,weekly,monthly,revisions}`.
-The overview chart uses `GET /series/apix?freq=monthly`. `as_of` also drives the masthead timestamp.
+The homepage uses this endpoint only (headline, problem, snapshot). The movers, collection and calendar blocks are shown on the dashboard rail. `as_of` also drives the masthead timestamp.
 
 ### `GET /series/subindices`
 `as_of`, `mom_total`, `weight_source`, `items[{code,name,weight,level,mom,history[14]}]`,

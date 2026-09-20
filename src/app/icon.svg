@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="FareSankhya">
+  <circle cx="50" cy="50" r="50" fill="#0E1B26"/>
+  <g transform="translate(28,6) scale(0.55) rotate(42 50 50)">
+    <path d="M50 3 C53.5 3 56 11 56.5 22 L56.5 40 L94 70 L94 78 L56.5 64 L56.5 82 L70 92 L70 96 L50 90 L30 96 L30 92 L43.5 82 L43.5 64 L6 78 L6 70 L43.5 40 L43.5 22 C44 11 46.5 3 50 3 Z" fill="#FFFFFF"/>
+  </g>
+  <path d="M11.6 82 L88.4 82 L80 90 L20 90 Z" fill="#F0821E"/>
+</svg>

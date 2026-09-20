@@ -1,3 +1,5 @@
+import { Logo } from "@/components/Logo";
+
 const COLS: { title: string; links: string[] }[] = [
   { title: "Data", links: ["Monthly bulletin", "Full CSV archive", "Revision policy"] },
   { title: "About", links: ["Methodology v1.2", "Quality report", "Contact the division"] },
@@ -9,8 +11,11 @@ export function Footer() {
     <footer className="mt-auto border-t border-line bg-wash">
       <div className="mx-auto grid max-w-page gap-8 px-4 py-9 md:px-10" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))" }}>
         <div>
-          <div className="font-display text-[16px] font-semibold">FareSankhya · APIx</div>
-          <div className="mt-2 max-w-[34ch] text-[13px] leading-[1.6] text-muted">
+          <div className="flex items-center gap-3">
+            <Logo size={32} />
+            <div className="font-display text-[16px] font-semibold">FareSankhya · APIx</div>
+          </div>
+          <div className="mt-[10px] max-w-[34ch] text-[13px] leading-[1.6] text-muted">
             An experimental statistic of the Ministry of Statistics and Programme Implementation.
           </div>
         </div>

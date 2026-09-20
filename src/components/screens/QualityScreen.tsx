@@ -2,7 +2,7 @@
 import { getQualityAnomalies, getQualitySummary, getQualitySources } from "@/lib/api/client";
 import { useApi } from "@/hooks/useApi";
 import { Async, SkeletonBlock } from "@/components/ui/Async";
-import { Card, CardTitle, Container, DataTable, Eyebrow, RuleCell, RuleGrid, StatusDot, Tag } from "@/components/ui/primitives";
+import { Card, CardTitle, Container, DataTable, Dek, Eyebrow, RuleCell, RuleGrid, StatusDot, Tag } from "@/components/ui/primitives";
 import { hhmm, num, pct } from "@/lib/format";
 import type { AnomalyAction } from "@/lib/api/schemas";
 
@@ -24,6 +24,7 @@ export function QualityScreen() {
         <div>
           <Eyebrow>Operations</Eyebrow>
           <h1 className="mt-2 font-display text-[30px] font-semibold tracking-[-0.015em]">Collection &amp; data quality</h1>
+          <Dek>Every figure the index publishes is traceable to a source, a sweep and a validation rule. This page shows all three, live.</Dek>
         </div>
         {src.status === "ready" && (() => {
           const up = src.data.sources.filter((s) => s.up).length;
@@ -63,8 +64,8 @@ export function QualityScreen() {
         )}
       </Async>
 
-      <div className="mt-[34px] grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-        <Card className="!px-[26px] !py-6">
+      <div className="mt-[34px] flex flex-wrap items-start gap-8">
+        <Card className="min-w-0 flex-[3_1_420px] !px-[26px] !py-6">
           <CardTitle>Anomaly log</CardTitle>
           <Async state={an} skeleton={<SkeletonBlock height={200} label="Loading anomalies" />} isEmpty={(a) => a.items.length === 0} empty={{ title: "No anomalies today", hint: "Every observation passed validation." }}>
             {(a) => (
@@ -81,7 +82,7 @@ export function QualityScreen() {
           </Async>
         </Card>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex min-w-0 flex-[2_1_300px] flex-col gap-6">
           <Async state={sum} skeleton={<SkeletonBlock height={200} label="Loading rules" />}>
             {(s) => (
               <>

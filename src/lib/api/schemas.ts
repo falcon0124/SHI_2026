@@ -37,7 +37,19 @@ export type ApixSeries = z.infer<typeof ApixSeriesSchema>;
 export const OverviewSchema = z.object({
   as_of: z.string(), // ISO 8601 with +05:30
   release_label: z.string(), // "Release 09/2026"
-  headline: z.object({ level: z.number(), mom: z.number(), yoy: z.number(), base: z.string() }),
+  headline: z.object({
+    level: z.number(),
+    mom: z.number(),
+    yoy: z.number(),
+    base: z.string(),
+    period_label: z.string(), // "September 2026"
+    prev_period_label: z.string(), // "August"
+  }),
+  problem: z.object({
+    swing_min_pct: z.number(), // typical low end of single-day fare swing on a busy route
+    swing_max_pct: z.number(),
+    observations_per_month: z.number().int(), // per route per booking window
+  }),
   today: z.object({
     fares_read: z.number().int(),
     scraper_uptime_30d: z.number(),

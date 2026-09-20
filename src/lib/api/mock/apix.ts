@@ -57,7 +57,8 @@ export function mockOverview(): Overview {
   return {
     as_of: "2026-09-19T18:00:00+05:30",
     release_label: "Release 09/2026",
-    headline: { level: 118.4, mom: 0.0207, yoy: 0.1149, base: "2024-01=100" },
+    headline: { level: 118.4, mom: 0.0207, yoy: 0.1149, base: "2024-01=100", period_label: "September 2026", prev_period_label: "August" },
+    problem: { swing_min_pct: 200, swing_max_pct: 400, observations_per_month: 30 },
     today: { fares_read: 4812, scraper_uptime_30d: 0.992, outlier_rate: 0.0031 },
     chart_note:
       "APIx captures the May–June and December peaks that a monthly survey averages away. Divergence from the official series widens to 10.2 points in June 2026.",

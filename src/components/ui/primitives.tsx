@@ -14,12 +14,17 @@ export function Eyebrow({ children, accent }: { children: ReactNode; accent?: bo
   );
 }
 
-export function PageHeader({ eyebrow, title, children }: { eyebrow: string; title: string; children?: ReactNode }) {
+export const Dek = ({ children }: { children: ReactNode }) => (
+  <p className="m-0 mt-3 max-w-[72ch] text-[14.5px] leading-[1.6] text-muted">{children}</p>
+);
+
+export function PageHeader({ eyebrow, title, dek, children }: { eyebrow: string; title: string; dek?: string; children?: ReactNode }) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-7 border-b border-line pb-[22px]">
       <div>
         <Eyebrow>{eyebrow}</Eyebrow>
         <h1 className="mt-2 font-display text-[30px] font-semibold tracking-[-0.015em]">{title}</h1>
+        {dek && <Dek>{dek}</Dek>}
       </div>
       {children}
     </div>

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { getOverview } from "@/lib/api/client";
 import { useApi } from "@/hooks/useApi";
 import { releaseStamp } from "@/lib/format";
+import { Logo } from "@/components/Logo";
 
 export const NAV = [
   { href: "/", label: "Overview" },
@@ -22,7 +23,7 @@ export function Header() {
     <header className="sticky top-0 z-20 border-b border-line bg-white">
       <div className="mx-auto flex max-w-page flex-wrap items-center justify-between gap-6 px-4 py-[14px] md:px-10">
         <Link href="/" className="flex flex-none items-center gap-[14px] !text-ink no-underline hover:!text-ink hover:no-underline" aria-label="FareSankhya home">
-          <div className="flex h-[38px] w-[38px] items-center justify-center bg-ink font-display text-[17px] font-semibold text-white">FS</div>
+          <Logo size={40} />
           <div className="flex flex-col leading-[1.15]">
             <span className="font-display text-[19px] font-semibold tracking-[-0.01em]">FareSankhya</span>
             <span className="text-[11.5px] uppercase tracking-[0.09em] text-muted">Airfare Price Index</span>
