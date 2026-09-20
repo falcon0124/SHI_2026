@@ -1,0 +1,52 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: ["./src/**/*.{ts,tsx}"],
+  theme: {
+    borderRadius: { none: "0", DEFAULT: "0", sm: "2px", full: "9999px" },
+    boxShadow: { none: "none" },
+    extend: {
+      colors: {
+        ink: "#0E1B26",
+        "ink-body": "#33424E",
+        slate: "#495A66",
+        muted: "#7C8B95",
+        faint: "#9AA8B2",
+        line: "#E3E8EB",
+        "line-soft": "#EDF1F3",
+        "line-strong": "#CFD8DE",
+        "border-input": "#D6DEE3",
+        "border-btn": "#C3CDD4",
+        "border-sel": "#C9D3DA",
+        wash: "#F6F8FA",
+        "wash-bar": "#F0F3F5",
+        accent: "#CF5C11",
+        "accent-wash": "#FCFAF8",
+        "accent-dark": "#A3490C",
+        "accent-tag-bg": "#FDF3E9",
+        blue: "#0B5FA5",
+        "blue-soft": "#7FA8C9",
+        "blue-wash": "#F5F9FC",
+        green: "#157A47",
+        "green-wash": "#EAF5EE",
+        "green-wash2": "#F2F9F5",
+        "green-border": "#BFE0CC",
+        red: "#B3261E",
+        "red-wash": "#FBECEA",
+        "bench": "#94A5B0",
+        "nav-idle": "#6B7C88",
+        "banner-text": "#C7D2DA",
+        "banner-dim": "#8FA0AC",
+        "code-text": "#D9E2E8",
+      },
+      fontFamily: {
+        display: ["var(--font-display)", "sans-serif"],
+        sans: ["var(--font-sans)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+      },
+      maxWidth: { page: "1440px" },
+    },
+  },
+  plugins: [],
+};
+export default config;

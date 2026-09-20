@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body { margin: 0; padding: 0; background: #fff; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font-sans), sans-serif; color: #0E1B26; }
+  * { box-sizing: border-box; }
+  a { color: #0B5FA5; text-decoration: none; transition: color 120ms; }
+  a:hover { color: #CF5C11; text-decoration: underline; }
+  table { border-collapse: collapse; }
+  .font-mono, code, pre { font-variant-numeric: tabular-nums; }
+  button, a, input { border-radius: 0; }
+  :focus-visible { outline: 2px solid #0B5FA5; outline-offset: 2px; }
+  button { cursor: pointer; transition: color 120ms, background-color 120ms, border-color 120ms; }
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}
