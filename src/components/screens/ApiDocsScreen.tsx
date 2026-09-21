@@ -35,7 +35,7 @@ export function ApiDocsScreen() {
               type="button"
               aria-pressed={i === idx}
               onClick={() => router.replace(`${path}?ep=${i}`, { scroll: false })}
-              className={cx("flex w-full items-center gap-[10px] border px-[14px] py-3 text-left", i === idx ? "border-border-sel bg-wash" : "border-line-soft bg-white hover:bg-wash")}
+              className={cx("row-hover flex min-h-11 w-full items-center gap-[10px] border border-l-4 px-[14px] py-3 text-left", i === idx ? "border-border-sel border-l-accent bg-wash" : "border-line-soft border-l-transparent bg-white hover:!border-l-line-strong")}
             >
               <span className="flex-none bg-green-wash px-[6px] py-[3px] font-mono text-[10.5px] font-semibold text-green">GET</span>
               <span className="truncate font-mono text-[12.5px] text-ink">{e.path}</span>
@@ -65,7 +65,7 @@ export function ApiDocsScreen() {
             />
           </Card>
 
-          <div className="grid gap-7 md:grid-cols-2">
+          <div className="grid gap-7 lg:grid-cols-2">
             <Code title="Request">{ep.req}</Code>
             <Code title="200 Response">{ep.res}</Code>
           </div>

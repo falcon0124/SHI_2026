@@ -32,7 +32,7 @@ export function MethodologyScreen() {
         </nav>
 
         <article className="max-w-[76ch]">
-          <ol className="m-0 mb-10 grid list-none grid-cols-2 gap-px border border-line bg-line p-0 sm:grid-cols-3 xl:grid-cols-6">
+          <ol className="m-0 mb-10 grid list-none gap-px border border-line bg-line p-0" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(112px,1fr))" }}>
             {PIPELINE.map((t, i) => (
               <li key={t} className="bg-white px-[14px] py-4">
                 <div className="font-mono text-[11px] font-medium text-accent">{String(i + 1).padStart(2, "0")}</div>

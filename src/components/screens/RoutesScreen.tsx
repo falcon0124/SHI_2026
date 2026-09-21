@@ -34,7 +34,7 @@ function RouteRail({ routes, selected, onSelect }: { routes: RouteSummary[]; sel
             type="button"
             aria-pressed={sel}
             onClick={() => onSelect(slug(r.pair))}
-            className={cx("flex w-full items-center justify-between gap-[10px] border border-l-4 px-4 py-[14px] text-left", sel ? "border-border-sel border-l-accent bg-wash" : "border-line-soft border-l-transparent bg-white hover:bg-wash")}
+            className={cx("row-hover flex min-h-[54px] w-full items-center justify-between gap-[10px] border border-l-4 px-4 py-[14px] text-left", sel ? "border-border-sel border-l-accent bg-wash" : "border-line-soft border-l-transparent bg-white hover:!border-l-line-strong")}
           >
             <span>
               <span className="block font-mono text-[14.5px] font-medium text-ink">{r.pair}</span>
@@ -58,7 +58,7 @@ function RouteDetailView({ route, pair }: { route: RouteSummary; pair: string })
             <h2 className="m-0 font-display text-[24px] font-semibold">{route.pair} · {route.cities}</h2>
             <p className="m-0 mt-[7px] text-[13.5px] text-muted">{route.note}</p>
           </div>
-          <dl className="m-0 flex gap-7">
+          <dl className="m-0 flex flex-wrap gap-x-7 gap-y-3">
             {[
               [route.index.toFixed(1), "Sub-index", ""],
               [inr(route.mean_fare_inr), "Mean fare, 30d", ""],

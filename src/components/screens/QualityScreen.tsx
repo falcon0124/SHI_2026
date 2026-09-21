@@ -47,7 +47,7 @@ export function QualityScreen() {
             {s.sources.map((x) => {
               const ok = x.up && x.uptime_30d >= 0.97;
               return (
-                <RuleCell key={x.id} className="px-5 py-[18px]">
+                <RuleCell key={x.id} interactive className="px-5 py-[18px]">
                   <div className="flex items-center justify-between gap-[10px]">
                     <span className="text-[14.5px] font-medium">{x.name}</span>
                     <StatusDot color={ok ? "bg-green" : "bg-accent"} label={ok ? "Healthy" : "Degraded"} />

@@ -3,6 +3,7 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
+    screens: { sm: "640px", md: "820px", lg: "1040px", xl: "1280px" },
     borderRadius: { none: "0", DEFAULT: "0", sm: "2px", full: "9999px" },
     boxShadow: { none: "none" },
     extend: {
@@ -45,6 +46,7 @@ const config: Config = {
         mono: ["var(--font-mono)", "monospace"],
       },
       maxWidth: { page: "1440px" },
+      transitionTimingFunction: { ui: "cubic-bezier(0.2, 0, 0.2, 1)" },
     },
   },
   plugins: [],

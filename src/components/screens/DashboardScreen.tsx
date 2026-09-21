@@ -43,7 +43,7 @@ export function DashboardScreen() {
         <div className="flex items-center gap-[10px]">
           <Segmented label="Frequency" options={FREQS} value={freq} onChange={setFreq} />
           <Button
-            className="!px-4 !py-[9px] !text-[13.5px]"
+            className="!min-h-11 !px-4 !py-[9px] !text-[13.5px]"
             disabled={series.status !== "ready"}
             onClick={() => series.status === "ready" && csv([["period", "apix", "cpi_transport"], ...series.data.points.map((p, i) => [p.period, String(p.value), String(series.data.benchmark[i]?.value ?? "")])], `apix-${freq}.csv`)}
           >
@@ -84,7 +84,7 @@ export function DashboardScreen() {
                   </div>
                   <div className="mt-5">
                     <LineChart
-                      height={340} min={min} max={max}
+                      height={340} mobileHeight={260} animateKey="dashboard-main" min={min} max={max}
                       label={`${a.title}, APIx${bench ? " and CPI Transport" : ""}`}
                       xLabels={pickEvenly(a.points, X_TICKS[freq]).map((p) => periodLabel(p.period, freq))}
                       lines={[...(bench ? [{ values: b, color: "#94A5B0", width: 2, dash: "5 4" }] : []), { values: v, color: "#CF5C11", area: true }]}

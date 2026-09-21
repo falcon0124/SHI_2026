@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export const cx = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).join(" ");
 
 export function Container({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cx("mx-auto max-w-page px-4 md:px-10", className)}>{children}</div>;
+  return <div className={cx("mx-auto max-w-page px-[18px] md:px-10", className)}>{children}</div>;
 }
 
 export function Eyebrow({ children, accent }: { children: ReactNode; accent?: boolean }) {
@@ -56,8 +56,8 @@ export function RuleGrid({ children, min = 180, fill = false, className }: { chi
     </div>
   );
 }
-export const RuleCell = ({ children, className }: { children: ReactNode; className?: string }) => (
-  <div className={cx("bg-white shadow-[0_0_0_1px_#E3E8EB]", className)}>{children}</div>
+export const RuleCell = ({ children, className, interactive }: { children: ReactNode; className?: string; interactive?: boolean }) => (
+  <div className={cx("bg-white shadow-[0_0_0_1px_#E3E8EB]", interactive && "transition-[background-color,box-shadow] duration-150 ease-ui hover:bg-[#FBFCFC] hover:shadow-[0_0_0_1px_#C9D3DA]", className)}>{children}</div>
 );
 
 export function StatTile({ label, value, tone, small }: { label: string; value: ReactNode; tone?: string; small?: boolean }) {
@@ -120,7 +120,7 @@ export function Segmented<T extends string>({ options, value, onChange, label }:
           aria-pressed={o.id === value}
           onClick={() => onChange(o.id)}
           className={cx(
-            "px-[18px] py-[9px] text-[13.5px] font-medium",
+            "min-h-11 px-[18px] py-[9px] text-[13.5px] font-medium",
             i < options.length - 1 && "border-r border-border-input",
             o.id === value ? "bg-ink text-white" : "bg-white text-[#4A5A66] hover:bg-wash",
           )}

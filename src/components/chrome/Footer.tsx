@@ -9,7 +9,7 @@ const COLS: { title: string; links: string[] }[] = [
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-line bg-wash">
-      <div className="mx-auto grid max-w-page gap-8 px-4 py-9 md:px-10" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))" }}>
+      <div className="mx-auto grid max-w-page gap-8 px-[18px] py-9 md:px-10" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))" }}>
         <div>
           <div className="flex items-center gap-3">
             <Logo size={32} />
@@ -29,7 +29,7 @@ export function Footer() {
         ))}
       </div>
       <div className="border-t border-line">
-        <div className="mx-auto max-w-page px-4 py-4 text-[12.5px] text-faint md:px-10">
+        <div className="mx-auto max-w-page px-[18px] py-4 text-[12.5px] text-faint md:px-10">
           Prototype · Smart India Hackathon 2026 · Figures shown are illustrative.
         </div>
       </div>

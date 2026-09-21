@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+"use client";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { areaPath, bandPath, pointsFromSeries, yTicks } from "@/lib/chart";
 
 /** Visually-hidden data table so chart data is available to assistive tech. */
@@ -27,17 +28,21 @@ const Grid = ({ w, h }: { w: number; h: number }) => (
   </>
 );
 
+/** Charts that have already played their entrance animation (first mount only). */
+const seen = new Set<string>();
+
 /** Frame: HTML y-axis column aligned to the SVG only (x labels sit outside the relative wrapper). */
-function Frame({ height, ticks, xLabels, children, label }: { height: number; ticks: { label: string; top: string }[]; xLabels: string[]; children: ReactNode; label: string }) {
+function Frame({ height, mobileHeight, ticks, xLabels, children, label }: { height: number; mobileHeight?: number; ticks: { label: string; top: string }[]; xLabels: string[]; children: ReactNode; label: string }) {
+  const vars = { "--h": `${height}px`, "--hm": `${mobileHeight ?? height}px` } as CSSProperties;
   return (
     <div className="pl-11">
-      <div className="relative" style={{ height }}>
+      <div className="relative h-[var(--hm)] md:h-[var(--h)]" style={vars}>
         <div className="absolute -left-11 bottom-0 top-0 w-10" aria-hidden>
           {ticks.map((t) => (
             <div key={t.top} className="absolute right-2 -translate-y-1/2 font-mono text-[11.5px] text-faint" style={{ top: t.top }}>{t.label}</div>
           ))}
         </div>
-        <svg role="img" aria-label={label} viewBox={`0 0 1000 ${height}`} preserveAspectRatio="none" className="block w-full overflow-visible" style={{ height }}>
+        <svg role="img" aria-label={label} viewBox={`0 0 1000 ${height}`} preserveAspectRatio="none" className="block h-full w-full overflow-visible">
           {children}
         </svg>
       </div>
@@ -48,16 +53,24 @@ function Frame({ height, ticks, xLabels, children, label }: { height: number; ti
   );
 }
 
-export function LineChart({ lines, min, max, height, xLabels, label, fmt }: { lines: Line[]; min: number; max: number; height: number; xLabels: string[]; label: string; fmt?: (v: number) => string }) {
+export function LineChart({ lines, min, max, height, mobileHeight, xLabels, label, fmt, animateKey }: { lines: Line[]; min: number; max: number; height: number; mobileHeight?: number; xLabels: string[]; label: string; fmt?: (v: number) => string; animateKey?: string }) {
+  // Entrance animation plays once per key; later data/frequency changes re-render instantly.
+  const [animate] = useState(() => {
+    if (!animateKey || seen.has(animateKey)) return false;
+    seen.add(animateKey);
+    return true;
+  });
   return (
-    <Frame height={height} ticks={yTicks(min, max, fmt)} xLabels={xLabels} label={label}>
+    <Frame height={height} mobileHeight={mobileHeight} ticks={yTicks(min, max, fmt)} xLabels={xLabels} label={label}>
       <Grid w={1000} h={height} />
       {lines.filter((l) => l.area).map((l, i) => (
-        <path key={`a${i}`} d={areaPath(l.values, 1000, height, min, max)} fill={l.color} fillOpacity="0.07" />
+        <path key={`a${i}`} d={areaPath(l.values, 1000, height, min, max)} fill={l.color} fillOpacity="0.07" className={animate ? "chart-fade" : undefined} />
       ))}
-      {lines.map((l, i) => (
-        <polyline key={i} points={pointsFromSeries(l.values, 1000, height, min, max)} fill="none" stroke={l.color} strokeWidth={l.width ?? 2.5} strokeDasharray={l.dash} vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
-      ))}
+      <g className={animate ? "chart-reveal" : undefined}>
+        {lines.map((l, i) => (
+          <polyline key={i} points={pointsFromSeries(l.values, 1000, height, min, max)} fill="none" stroke={l.color} strokeWidth={l.width ?? 2.5} strokeDasharray={l.dash} vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
+        ))}
+      </g>
     </Frame>
   );
 }
