@@ -1,67 +1,99 @@
 import type { ApixSeries, Freq, Overview, SubIndices } from "../schemas";
+import cpi from "../data/cpi-transport.json";
 
-const MONTHLY = [100.8, 101.9, 104.2, 107.6, 112.3, 115.1, 111.4, 108.9, 106.2, 110.7, 114.9, 119.8, 104.1, 105.6, 108.3, 111.9, 116.8, 120.4, 116.2, 116.0, 118.4];
-const CPI = [100.4, 100.9, 101.3, 101.8, 102.4, 102.9, 103.1, 103.2, 103.0, 103.6, 104.1, 104.7, 105.0, 105.4, 105.9, 106.3, 106.9, 107.4, 107.6, 107.8, 108.2];
+/**
+ * PROVENANCE
+ *  - CPI benchmark: REAL. MoSPI eSankhyiki API, pulled once (see ../data/cpi-transport.json).
+ *  - APIx line, route/source/quality figures: ILLUSTRATIVE. No live fare data has been collected yet.
+ */
+
+/** Illustrative APIx monthly values, Jan 2024 = 100, Jan 2024 – Dec 2025. */
+const MONTHLY = [100.0, 100.9, 102.3, 100.8, 101.9, 104.2, 107.6, 112.3, 115.1, 111.4, 108.9, 106.2, 110.7, 114.9, 119.8, 104.1, 105.6, 108.3, 111.9, 116.8, 120.4, 116.2, 116.0, 118.4];
 
 const gen = <T>(n: number, f: (i: number) => T): T[] => Array.from({ length: n }, (_, i) => f(i));
 const r1 = (v: number) => Math.round(v * 10) / 10;
 
-const TODAY = Date.UTC(2026, 8, 19);
+/** Timestamp the CPI data was pulled (IST). Drives every "as of" in the mocks. */
+export const RETRIEVED_AT = cpi.retrieved_at;
+
+/** Real CPI Transport & Communication, rebased to Jan 2024 = 100, keyed by "YYYY-MM". */
+const cpiByMonth = new Map(cpi.points.map((p) => [p.period, p.index]));
+const cpiBase = cpiByMonth.get("2024-01")!;
+const cpiRebased = (period: string) => r1(((cpiByMonth.get(period) ?? NaN) / cpiBase) * 100);
+
+const monthlyPeriods = (): string[] =>
+  gen(MONTHLY.length, (i) => `${2024 + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, "0")}`);
+
+// Last real observation is 2025-12; daily/weekly windows end at its month-end.
+const TODAY = Date.UTC(2025, 11, 31);
 const isoDay = (t: number) => new Date(t).toISOString().slice(0, 10);
 const DAY = 86_400_000;
+const monthOf = (isoDate: string) => isoDate.slice(0, 7);
 
-function monthlyPeriods(): string[] {
-  return gen(MONTHLY.length, (i) => {
-    const m = i; // Jan 2025 + i
-    return `${2025 + Math.floor(m / 12)}-${String((m % 12) + 1).padStart(2, "0")}`;
-  });
-}
+const benchmarkMeta = {
+  name: "CPI Transport & Communication",
+  detail: "MoSPI eSankhyiki API · All India, combined · base 2012=100, rebased to Jan 2024=100",
+  retrieved_at: RETRIEVED_AT,
+  real: true,
+};
+
+const std = (v: number[]) => {
+  const m = v.reduce((a, b) => a + b, 0) / v.length;
+  return Math.sqrt(v.reduce((a, b) => a + (b - m) ** 2, 0) / v.length);
+};
 
 export function mockApix(freq: Freq): ApixSeries {
   const base = "2024-01=100";
-  if (freq === "daily") {
-    const v = gen(90, (i) => 112 + 6 * Math.sin(i / 7) + 2.4 * Math.sin(i / 2.3) + i * 0.055);
-    const b = gen(90, (i) => 106.6 + i * 0.018);
-    const dates = gen(90, (i) => isoDay(TODAY - (89 - i) * DAY));
+  const last12 = MONTHLY.slice(-12);
+  const common = {
+    series: "APIx" as const,
+    base,
+    freq,
+    illustrative: true,
+    benchmark_source: benchmarkMeta,
+    mom: MONTHLY[MONTHLY.length - 1] / MONTHLY[MONTHLY.length - 2] - 1,
+    yoy: MONTHLY[MONTHLY.length - 1] / MONTHLY[MONTHLY.length - 13] - 1,
+  };
+  const range = { range_12m_min: Math.min(...last12), range_12m_max: Math.max(...last12), volatility_12m: Math.round(std(last12) * 100) / 100 };
+
+  if (freq === "daily" || freq === "weekly") {
+    const daily = freq === "daily";
+    const n = daily ? 90 : 52;
+    const step = daily ? DAY : 7 * DAY;
+    const v = daily
+      ? gen(n, (i) => 112 + 6 * Math.sin(i / 7) + 2.4 * Math.sin(i / 2.3) + i * 0.055)
+      : gen(n, (i) => 110 + 7 * Math.sin(i / 8.2) + 2 * Math.sin(i / 2.7) + i * 0.09);
+    const dates = gen(n, (i) => isoDay(TODAY - (n - 1 - i) * step));
     return {
-      series: "APIx", base, freq, title: "Daily index, last 90 days",
+      ...common,
+      title: daily ? "Daily index, last 90 days" : "Weekly index, rolling 52 weeks",
       points: dates.map((period, i) => ({ period, value: r1(v[i]) })),
-      benchmark: dates.map((period, i) => ({ period, value: r1(b[i]) })),
-      mom: 0.0207, yoy: 0.1149,
-      stats: { change: 0.0042, range_12m_min: 104.1, range_12m_max: 120.4, volatility_12m: 5.84, observations: 4812 },
+      // Real monthly CPI, held constant within each month (CPI is only published monthly).
+      benchmark: dates.map((period) => ({ period, value: cpiRebased(monthOf(period)) })),
+      stats: { change: daily ? 0.0042 : 0.0118, ...range, observations: daily ? 4812 : 33684 },
     };
   }
-  if (freq === "weekly") {
-    const v = gen(52, (i) => 110 + 7 * Math.sin(i / 8.2) + 2 * Math.sin(i / 2.7) + i * 0.09);
-    const b = gen(52, (i) => 104.4 + i * 0.073);
-    const dates = gen(52, (i) => isoDay(TODAY - (51 - i) * 7 * DAY));
-    return {
-      series: "APIx", base, freq, title: "Weekly index, rolling 52 weeks",
-      points: dates.map((period, i) => ({ period, value: r1(v[i]) })),
-      benchmark: dates.map((period, i) => ({ period, value: r1(b[i]) })),
-      mom: 0.0207, yoy: 0.1149,
-      stats: { change: 0.0118, range_12m_min: 104.1, range_12m_max: 120.4, volatility_12m: 5.84, observations: 33684 },
-    };
-  }
+
   const periods = monthlyPeriods();
   return {
-    series: "APIx", base, freq, title: "Monthly index, Jan 2025 – Sep 2026",
+    ...common,
+    title: "Monthly index, Jan 2024 – Dec 2025",
     points: periods.map((period, i) => ({ period, value: MONTHLY[i] })),
-    benchmark: periods.map((period, i) => ({ period, value: CPI[i] })),
-    mom: 0.0207, yoy: 0.1149,
-    stats: { change: 0.0207, range_12m_min: 104.1, range_12m_max: 120.4, volatility_12m: 5.84, observations: 144360 },
+    benchmark: periods.map((period) => ({ period, value: cpiRebased(period) })),
+    stats: { change: common.mom, ...range, observations: 144360 },
   };
 }
 
 export function mockOverview(): Overview {
+  const mom = MONTHLY[MONTHLY.length - 1] / MONTHLY[MONTHLY.length - 2] - 1;
+  const yoy = MONTHLY[MONTHLY.length - 1] / MONTHLY[MONTHLY.length - 13] - 1;
   return {
-    as_of: "2026-09-19T18:00:00+05:30",
-    release_label: "Release 09/2026",
-    headline: { level: 118.4, mom: 0.0207, yoy: 0.1149, base: "2024-01=100", period_label: "September 2026", prev_period_label: "August" },
+    as_of: RETRIEVED_AT,
+    release_label: "Release 12/2025",
+    headline: { level: MONTHLY[MONTHLY.length - 1], mom, yoy, base: "2024-01=100", period_label: "December 2025", prev_period_label: "November" },
     problem: { swing_min_pct: 200, swing_max_pct: 400, observations_per_month: 30 },
     today: { fares_read: 4812, scraper_uptime_30d: 0.992, outlier_rate: 0.0031 },
-    chart_note:
-      "APIx captures the May–June and December peaks that a monthly survey averages away. Divergence from the official series widens to 10.2 points in June 2026.",
+    chart_note: "CPI benchmark is real MoSPI data; the APIx series is illustrative until live fare collection is connected.",
     movers: [
       { pair: "DEL–GOI", delta_30d: 0.069 },
       { pair: "DEL–BOM", delta_30d: 0.048 },
@@ -77,7 +109,7 @@ export function mockOverview(): Overview {
 export function mockSubIndices(): SubIndices {
   const h = (n: number, f: (i: number) => number) => gen(n, (i) => r1(f(i)));
   return {
-    as_of: "2026-09-19T18:00:00+05:30",
+    as_of: RETRIEVED_AT,
     mom_total: 0.0207,
     weight_source: "DGCA 2025 schedule",
     items: [

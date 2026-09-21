@@ -1,0 +1,227 @@
+{
+ "source": "MoSPI eSankhyiki API",
+ "endpoint": "https://api.mospi.gov.in/api/cpi/getCPIIndex",
+ "query": "base_year=2012&series=Current&sector_code=3 (Combined), state All India",
+ "subgroup": "Transport and Communication",
+ "base": "2012=100",
+ "retrieved_at": "2026-09-21T13:48:41+05:30",
+ "note": "Latest month available in the API for this series was December 2025.",
+ "points": [
+  {
+   "period": "2023-01",
+   "index": 163.6,
+   "inflation_yoy_pct": 4.54,
+   "status": "F"
+  },
+  {
+   "period": "2023-02",
+   "index": 164.0,
+   "inflation_yoy_pct": 4.53,
+   "status": "F"
+  },
+  {
+   "period": "2023-03",
+   "index": 164.2,
+   "inflation_yoy_pct": 3.99,
+   "status": "F"
+  },
+  {
+   "period": "2023-04",
+   "index": 164.5,
+   "inflation_yoy_pct": 1.17,
+   "status": "F"
+  },
+  {
+   "period": "2023-05",
+   "index": 164.8,
+   "inflation_yoy_pct": 1.1,
+   "status": "F"
+  },
+  {
+   "period": "2023-06",
+   "index": 165.1,
+   "inflation_yoy_pct": 2.48,
+   "status": "F"
+  },
+  {
+   "period": "2023-07",
+   "index": 165.6,
+   "inflation_yoy_pct": 2.48,
+   "status": "F"
+  },
+  {
+   "period": "2023-08",
+   "index": 165.9,
+   "inflation_yoy_pct": 2.47,
+   "status": "F"
+  },
+  {
+   "period": "2023-09",
+   "index": 166.0,
+   "inflation_yoy_pct": 2.28,
+   "status": "F"
+  },
+  {
+   "period": "2023-10",
+   "index": 166.1,
+   "inflation_yoy_pct": 1.96,
+   "status": "F"
+  },
+  {
+   "period": "2023-11",
+   "index": 166.4,
+   "inflation_yoy_pct": 2.09,
+   "status": "F"
+  },
+  {
+   "period": "2023-12",
+   "index": 166.6,
+   "inflation_yoy_pct": 1.96,
+   "status": "F"
+  },
+  {
+   "period": "2024-01",
+   "index": 166.8,
+   "inflation_yoy_pct": 1.96,
+   "status": "F"
+  },
+  {
+   "period": "2024-02",
+   "index": 167.0,
+   "inflation_yoy_pct": 1.83,
+   "status": "F"
+  },
+  {
+   "period": "2024-03",
+   "index": 166.7,
+   "inflation_yoy_pct": 1.52,
+   "status": "F"
+  },
+  {
+   "period": "2024-04",
+   "index": 166.3,
+   "inflation_yoy_pct": 1.09,
+   "status": "F"
+  },
+  {
+   "period": "2024-05",
+   "index": 166.4,
+   "inflation_yoy_pct": 0.97,
+   "status": "F"
+  },
+  {
+   "period": "2024-06",
+   "index": 166.7,
+   "inflation_yoy_pct": 0.97,
+   "status": "F"
+  },
+  {
+   "period": "2024-07",
+   "index": 169.9,
+   "inflation_yoy_pct": 2.6,
+   "status": "F"
+  },
+  {
+   "period": "2024-08",
+   "index": 170.4,
+   "inflation_yoy_pct": 2.71,
+   "status": "F"
+  },
+  {
+   "period": "2024-09",
+   "index": 170.5,
+   "inflation_yoy_pct": 2.71,
+   "status": "F"
+  },
+  {
+   "period": "2024-10",
+   "index": 170.7,
+   "inflation_yoy_pct": 2.77,
+   "status": "F"
+  },
+  {
+   "period": "2024-11",
+   "index": 170.9,
+   "inflation_yoy_pct": 2.7,
+   "status": "F"
+  },
+  {
+   "period": "2024-12",
+   "index": 171.0,
+   "inflation_yoy_pct": 2.64,
+   "status": "F"
+  },
+  {
+   "period": "2025-01",
+   "index": 171.4,
+   "inflation_yoy_pct": 2.76,
+   "status": "F"
+  },
+  {
+   "period": "2025-02",
+   "index": 171.9,
+   "inflation_yoy_pct": 2.93,
+   "status": "F"
+  },
+  {
+   "period": "2025-03",
+   "index": 172.3,
+   "inflation_yoy_pct": 3.36,
+   "status": "F"
+  },
+  {
+   "period": "2025-04",
+   "index": 172.4,
+   "inflation_yoy_pct": 3.67,
+   "status": "F"
+  },
+  {
+   "period": "2025-05",
+   "index": 172.8,
+   "inflation_yoy_pct": 3.85,
+   "status": "F"
+  },
+  {
+   "period": "2025-06",
+   "index": 173.2,
+   "inflation_yoy_pct": 3.9,
+   "status": "F"
+  },
+  {
+   "period": "2025-07",
+   "index": 173.5,
+   "inflation_yoy_pct": 2.12,
+   "status": "F"
+  },
+  {
+   "period": "2025-08",
+   "index": 173.7,
+   "inflation_yoy_pct": 1.94,
+   "status": "F"
+  },
+  {
+   "period": "2025-09",
+   "index": 173.6,
+   "inflation_yoy_pct": 1.82,
+   "status": "F"
+  },
+  {
+   "period": "2025-10",
+   "index": 172.3,
+   "inflation_yoy_pct": 0.94,
+   "status": "F"
+  },
+  {
+   "period": "2025-11",
+   "index": 172.4,
+   "inflation_yoy_pct": 0.88,
+   "status": "F"
+  },
+  {
+   "period": "2025-12",
+   "index": 172.4,
+   "inflation_yoy_pct": 0.82,
+   "status": "F"
+  }
+ ]
+}

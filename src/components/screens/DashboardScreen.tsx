@@ -9,7 +9,7 @@ import { Button, Card, CardTitle, Container, DataTable, PageHeader, RuleGrid, Se
 import { ChartTable, LineChart, Sparkline } from "@/components/charts/charts";
 import { DashboardRail } from "./DashboardRail";
 import { niceScale, pickEvenly } from "@/lib/chart";
-import { deltaColor, num, pct, periodLabel, pp } from "@/lib/format";
+import { deltaColor, num, pct, periodLabel, pp, releaseStamp } from "@/lib/format";
 
 const FREQS: { id: Freq; label: string }[] = [
   { id: "daily", label: "Daily" }, { id: "weekly", label: "Weekly" }, { id: "monthly", label: "Monthly" },
@@ -76,9 +76,9 @@ export function DashboardScreen() {
                   <div className="flex flex-wrap items-start justify-between gap-5">
                     <h2 className="m-0 font-display text-[18px] font-semibold">{a.title}</h2>
                     <div className="flex items-center gap-[18px] text-[13px] text-slate">
-                      <span className="flex items-center gap-[7px]"><span className="block h-[3px] w-[14px] bg-accent" />APIx</span>
+                      <span className="flex items-center gap-[7px]"><span className="block h-[3px] w-[14px] bg-accent" />APIx{a.illustrative ? " (illustrative)" : ""}</span>
                       <button type="button" aria-pressed={bench} onClick={() => setBench((x) => !x)} className={cx("flex items-center gap-[7px]", !bench && "opacity-50")}>
-                        <span className="block h-[3px] w-[14px] bg-bench" />CPI Transport
+                        <span className="block h-[3px] w-[14px] bg-bench" />{a.benchmark_source.name}{a.benchmark_source.real ? " (MoSPI)" : ""}
                       </button>
                     </div>
                   </div>
@@ -91,6 +91,10 @@ export function DashboardScreen() {
                     />
                     <ChartTable caption={a.title} columns={["Period", "APIx", "CPI Transport"]} rows={a.points.map((p, i) => [p.period, p.value, b[i] ?? ""])} />
                   </div>
+                  <p className="m-0 mt-[18px] border-t border-line pt-[14px] text-[12.5px] leading-[1.55] text-muted">
+                    <strong className="font-semibold text-slate">Benchmark:</strong> {a.benchmark_source.detail}. Pulled {releaseStamp(a.benchmark_source.retrieved_at)}; latest month in the series is {periodLabel(`${a.benchmark[a.benchmark.length - 1].period.slice(0, 7)}-01`, "monthly")}.
+                    {a.illustrative && <> <strong className="font-semibold text-slate">APIx:</strong> illustrative until live fare collection is connected.</>}
+                  </p>
                 </div>
               );
             }}

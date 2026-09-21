@@ -17,7 +17,7 @@ document summarises it. A response that fails validation renders the error state
 
 ### `GET /series/apix?freq=daily|weekly|monthly`
 Required: `series:"APIx"`, `base` ("2024-01=100"), `freq`, `points[{period,value}]`, `mom`, `yoy`.
-EXT: `title`, `benchmark[{period,value}]` (CPI Transport, same periods as `points`),
+EXT: `title`, `illustrative` (bool), `benchmark_source{name,detail,retrieved_at,real}`, `benchmark[{period,value}]` (CPI Transport, same periods as `points`),
 `stats{change, range_12m_min, range_12m_max, volatility_12m, observations}`.
 Period formats: monthly `YYYY-MM`; daily and weekly `YYYY-MM-DD` (weekly = week start).
 Sizes: daily 90 points, weekly 52, monthly 21 (Jan 2025 → latest).

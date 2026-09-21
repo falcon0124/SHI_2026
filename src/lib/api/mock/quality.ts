@@ -1,3 +1,4 @@
+import { RETRIEVED_AT } from "./apix";
 import type { Anomalies, QualitySummary, Sources } from "../schemas";
 
 const S: [string, string, "Airline" | "OTA" | "Aggregator", number, number][] = [
@@ -11,13 +12,13 @@ const S: [string, string, "Airline" | "OTA" | "Aggregator", number, number][] = 
 
 export function mockSources(): Sources {
   return {
-    as_of: "2026-09-19T18:00:00+05:30",
-    last_sweep: "2026-09-19T18:00:00+05:30",
+    as_of: RETRIEVED_AT,
+    last_sweep: RETRIEVED_AT,
     sources: S.map(([id, name, kind, uptime_30d, latency_s]) => ({ id, name, kind, up: true, uptime_30d, latency_s })),
   };
 }
 
-const T = (hm: string) => `2026-09-19T${hm}:00+05:30`;
+const T = (hm: string) => `${RETRIEVED_AT.slice(0, 10)}T${hm}:00+05:30`;
 
 export function mockAnomalies(): Anomalies {
   const items: Anomalies["items"] = [

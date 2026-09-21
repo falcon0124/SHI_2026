@@ -76,7 +76,7 @@ export function Header() {
         <div className="flex flex-none items-center gap-[14px]">
           <div className="hidden text-right leading-[1.3] md:block">
             <div className="font-mono text-[12px] font-medium text-ink">{stamp}</div>
-            <div className="text-[11px] text-muted">Last index release</div>
+            <div className="text-[11px] text-muted">Data retrieved</div>
           </div>
           <div className="hidden h-[34px] w-[34px] items-center justify-center border border-line bg-wash text-[12.5px] font-semibold text-[#4A5A66] md:flex" aria-label="Signed-in analyst: AR" role="img">AR</div>
           <button
@@ -157,7 +157,7 @@ export function Header() {
           <Link href="/dashboard" tabIndex={open ? 0 : -1} className="press flex min-h-12 flex-1 items-center justify-center bg-ink text-[14.5px] font-medium !text-white no-underline hover:no-underline">Dashboard</Link>
           <Link href="/methodology" tabIndex={open ? 0 : -1} className="press flex min-h-12 flex-1 items-center justify-center border border-border-btn bg-white text-[14.5px] font-medium !text-ink no-underline hover:no-underline">Methodology</Link>
         </div>
-        <div className="mt-[14px] font-mono text-[12px] text-faint">Last release · {stamp}</div>
+        <div className="mt-[14px] font-mono text-[12px] text-faint">Data retrieved · {stamp}</div>
       </div>
     </header>
   );

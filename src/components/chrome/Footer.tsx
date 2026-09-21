@@ -30,7 +30,7 @@ export function Footer() {
       </div>
       <div className="border-t border-line">
         <div className="mx-auto max-w-page px-[18px] py-4 text-[12.5px] text-faint md:px-10">
-          Prototype · Smart India Hackathon 2026 · Figures shown are illustrative.
+          Prototype · Smart India Hackathon 2026 · CPI benchmark is real MoSPI data (eSankhyiki API); APIx, route, source and quality figures are illustrative.
         </div>
       </div>
     </footer>

@@ -31,7 +31,7 @@ const DAY = 86_400_000;
 export function mockRouteDetail(pair: string): RouteDetail | null {
   const r = SEEDS.find((s) => s.pair === pair.replace("-", "–"));
   if (!r) return null;
-  const today = Date.UTC(2026, 8, 19);
+  const today = Date.UTC(2025, 11, 31);
   const scale = r.base / 6480; // other routes scale the DEL–BOM source table
   const mean = Array.from({ length: 30 }, (_, i) => r.base + r.amp * 0.45 * Math.sin(i / 4.1) + r.amp * 0.18 * Math.sin(i / 1.7) + i * (r.base * 0.004));
   const band = mean.map((m, i) => ({

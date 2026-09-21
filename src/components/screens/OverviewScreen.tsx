@@ -54,7 +54,7 @@ export function OverviewScreen() {
           <Async state={ov} skeleton={<div role="status" className="space-y-3"><span className="sr-only">Loading headline</span><Skeleton h={12} w="50%" /><Skeleton h={72} w="70%" /><Skeleton h={14} w="60%" /></div>}>
             {(o) => (
               <>
-                <div className="text-[12px] uppercase tracking-[0.1em] text-muted">APIx · {o.headline.period_label}</div>
+                <div className="text-[12px] uppercase tracking-[0.1em] text-muted">APIx · {o.headline.period_label} · illustrative</div>
                 <div className="mt-2 font-mono text-[60px] font-semibold leading-none tracking-[-0.04em] md:text-[84px]">{o.headline.level.toFixed(1)}</div>
                 <div className={cx("mt-3 font-mono text-[16px] font-medium", deltaColor(o.headline.mom))}>
                   {o.headline.mom < 0 ? "▼" : "▲"} {pct(o.headline.mom, 2, false)} on {o.headline.prev_period_label}

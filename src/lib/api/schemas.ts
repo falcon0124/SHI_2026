@@ -18,6 +18,14 @@ export const ApixSeriesSchema = z.object({
   base: z.string(), // "2024-01=100"
   freq: FreqSchema,
   title: z.string(), // EXT
+  illustrative: z.boolean(), // EXT: true while APIx values are not from live fare collection
+  benchmark_source: z.object({
+    // EXT: provenance of the benchmark series
+    name: z.string(),
+    detail: z.string(),
+    retrieved_at: z.string(),
+    real: z.boolean(),
+  }),
   points: z.array(PointSchema),
   benchmark: z.array(PointSchema), // EXT: CPI Transport, same periods
   mom: z.number(), // fraction, 0.0207 = +2.07% (period-on-period for the freq)
